@@ -23,6 +23,12 @@ class Todo
         return $this->todo_list;
     }
 
+    public function delete_item()
+    {
+        $index = count($this->todo_list) - 1;
+        unset($this->todo_list[$index]);
+    }
+
     public function read()
     {
         $file = file_get_contents('./todo_list.json');

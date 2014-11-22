@@ -73,7 +73,57 @@ class TodoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(3, count($this->sut->get_todo_list()));
     }
 
-    public function createTodoList($item_number)
+    /**
+     * @test
+     */
+    public function _1つアイテムを追加して1つ削除してアイテム数が0件であるべき()
+    {
+        $this->sut->add_item(1);
+        $this->sut->delete_item();
+        $this->assertEquals(0, count($this->sut->get_todo_list()));
+    }
+
+    /**
+     * @test
+     */
+    public function _2つアイテムを追加して1つ削除してアイテム数が1件であるべき()
+    {
+        $this->addItem(2);
+        $this->sut->delete_item();
+        $this->assertEquals(1, count($this->sut->get_todo_list()));
+    }
+
+    /**
+     * @test
+     */
+    public function _アイテムが0件で1つ削除して正常終了するべき()
+    {
+        $this->sut->delete_item();
+        $this->assertNotFalse(true);
+    }
+
+    /**
+     * @test
+     */
+    public function _アイテムが0件で1つ削除してアイテム数が0件であるべき()
+    {
+        $this->sut->delete_item();
+        $this->assertEquals(0, count($this->sut->get_todo_list()));
+    }
+
+    /**
+     * @test
+     */
+    public function _2つアイテム追加して3つ削除してアイテム数が0件であるべき()
+    {
+        $this->addItem(2);
+        $this->sut->delete_item();
+        $this->sut->delete_item();
+        $this->sut->delete_item();
+        $this->assertEquals(0, count($this->sut->get_todo_list()));
+    }
+
+    private function createTodoList($item_number)
     {
         $this->sut = new Todo();
 
@@ -82,7 +132,7 @@ class TodoTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function addItem($item_number)
+    private function addItem($item_number)
     {
         for ($i = 0; $i < $item_number; $i++) {
             $this->sut->add_item('');
