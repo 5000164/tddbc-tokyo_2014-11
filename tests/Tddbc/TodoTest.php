@@ -26,4 +26,13 @@ class TodoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array(), $this->sut->get_todo_list());
     }
 
+    /**
+     * @test
+     */
+    public function リストのデータが1件ある時にアイテムの数が1件である()
+    {
+        $this->sut->add_item();
+        $this->assertEquals(1, count($this->sut->get_todo_list()));
+    }
+
 }
