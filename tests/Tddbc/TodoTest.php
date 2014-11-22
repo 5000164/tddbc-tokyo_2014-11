@@ -31,52 +31,56 @@ class TodoTest extends \PHPUnit_Framework_TestCase
      */
     public function リストのデータが1件ある時にアイテムの数が1件である()
     {
-        $this->sut->add_item('aa');
+        $this->sut->add_item($this->create_item(''));
         $this->assertEquals(1, count($this->sut->get_todo_list()));
     }
 
     /**
      * @test
      */
-    public function aを渡したらaが取得できるべき()
+    public function タイトルがaのアイテムを追加して取得したらリストの最後のアイテムのタイトルがaであるべき()
     {
-        $this->sut->add_item('a');
+        $this->sut->add_item($this->create_item('a'));
         $todo_list = $this->sut->get_todo_list();
-        $this->assertEquals('a', $todo_list[count($todo_list) - 1]);
+        $actual = $todo_list[count($todo_list) - 1]['title'];
+        $expected = 'a';
+        $this->assertEquals($expected, $actual);
     }
 
     /**
      * @test
      */
-    public function bを渡したらbが取得できるべき()
+    public function タイトルがbのアイテムを追加して取得したらリストの最後のアイテムのタイトルがbであるべき()
     {
-        $this->sut->add_item('b');
+        $this->sut->add_item($this->create_item('b'));
         $todo_list = $this->sut->get_todo_list();
-        $this->assertEquals('b', $todo_list[count($todo_list) - 1]);
+        $actual = $todo_list[count($todo_list) - 1]['title'];
+        $expected = 'b';
+        $this->assertEquals($expected, $actual);
     }
 
     /**
      * @test
      */
-    public function _2つアイテムを追加したらアイテム数が2件であるべき()
+    public function アイテムを2つ追加したらアイテム数が2件であるべき()
     {
-        $this->createTodoList(2);
+        $this->create_todo_list(2);
         $this->assertEquals(2, count($this->sut->get_todo_list()));
     }
 
     /**
      * @test
      */
-    public function _3つアイテムを追加したらアイテム数が3件であるべき()
+    public function アイテムを3つ追加したらアイテム数が3件であるべき()
     {
-        $this->createTodoList(3);
+        $this->create_todo_list(3);
         $this->assertEquals(3, count($this->sut->get_todo_list()));
     }
 
     /**
      * @test
      */
-    public function _1つアイテムを追加して1つ削除してアイテム数が0件であるべき()
+    public function アイテムを1つ追加して1つ削除してアイテム数が0件であるべき()
     {
         $this->sut->add_item(1);
         $this->sut->delete_item();
@@ -86,9 +90,9 @@ class TodoTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function _2つアイテムを追加して1つ削除してアイテム数が1件であるべき()
+    public function アイテムを2つ追加して1つ削除してアイテム数が1件であるべき()
     {
-        $this->addItem(2);
+        $this->add_item(2);
         $this->sut->delete_item();
         $this->assertEquals(1, count($this->sut->get_todo_list()));
     }
@@ -96,7 +100,7 @@ class TodoTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function _アイテムが0件で1つ削除して正常終了するべき()
+    public function アイテムが0件で1つ削除して正常終了するべき()
     {
         $this->sut->delete_item();
         $this->assertNotFalse(true);
@@ -105,7 +109,7 @@ class TodoTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function _アイテムが0件で1つ削除してアイテム数が0件であるべき()
+    public function アイテムが0件で1つ削除してアイテム数が0件であるべき()
     {
         $this->sut->delete_item();
         $this->assertEquals(0, count($this->sut->get_todo_list()));
@@ -114,29 +118,35 @@ class TodoTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function _2つアイテム追加して3つ削除してアイテム数が0件であるべき()
+    public function アイテムを2つ追加して3つ削除してアイテム数が0件であるべき()
     {
-        $this->addItem(2);
+        $this->add_item(2);
         $this->sut->delete_item();
         $this->sut->delete_item();
         $this->sut->delete_item();
         $this->assertEquals(0, count($this->sut->get_todo_list()));
     }
 
-    private function createTodoList($item_number)
+    private function create_todo_list($item_number)
     {
         $this->sut = new Todo();
 
         for ($i = 0; $i < $item_number; $i++) {
-            $this->sut->add_item('');
+
+            $this->sut->add_item($this->create_item(''));
         }
     }
 
-    private function addItem($item_number)
+    private function add_item($item_number)
     {
         for ($i = 0; $i < $item_number; $i++) {
-            $this->sut->add_item('');
+            $this->sut->add_item($this->create_item(''));
         }
+    }
+
+    private function create_item($title)
+    {
+        return array('title' => $title);
     }
 
 }
