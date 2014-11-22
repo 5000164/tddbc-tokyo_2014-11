@@ -35,4 +35,12 @@ class TodoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($this->sut->get_todo_list()));
     }
 
+    /**
+     * @test
+     */
+    public function todo_listファイルの中身がa()
+    {
+        $this->assertEquals('a', $this->sut->read());
+    }
+
 }
