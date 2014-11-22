@@ -4,9 +4,11 @@ namespace Tddbc;
 class Todo
 {
     private $todo_list;
+    private $id;
 
     function __construct()
     {
+        $this->id = 0;
         $json = $this->read();
         $this->todo_list = json_decode($json, true);
     }
@@ -16,11 +18,16 @@ class Todo
         return $this->todo_list;
     }
 
+    public function get_item($key)
+    {
+        return $this->todo_list[$key];
+    }
+
     public function add_item($item)
     {
-        $this->todo_list[] = $item;
-
-        return $this->todo_list;
+        $item['id'] = $this->id;
+        $this->todo_list[$this->id] = $item;
+        $this->id++;
     }
 
     public function delete_item()

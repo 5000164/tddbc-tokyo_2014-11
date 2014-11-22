@@ -82,7 +82,7 @@ class TodoTest extends \PHPUnit_Framework_TestCase
      */
     public function アイテムを1つ追加して1つ削除してアイテム数が0件であるべき()
     {
-        $this->sut->add_item(1);
+        $this->sut->add_item($this->create_item(''));
         $this->sut->delete_item();
         $this->assertEquals(0, count($this->sut->get_todo_list()));
     }
@@ -125,6 +125,66 @@ class TodoTest extends \PHPUnit_Framework_TestCase
         $this->sut->delete_item();
         $this->sut->delete_item();
         $this->assertEquals(0, count($this->sut->get_todo_list()));
+    }
+
+    /**
+     * @test
+     */
+    public function アイテムを2つ追加してキーが0のアイテムが取得できること()
+    {
+        $id = 0;
+        $this->sut->add_item($this->create_item('a'));
+        $this->sut->add_item($this->create_item('b'));
+
+        $actual = $this->sut->get_item($id)['id'];
+        $expected = '0';
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function アイテムを2つ追加してキーが1のアイテムが取得できること()
+    {
+        $id = 1;
+        $this->sut->add_item($this->create_item('a'));
+        $this->sut->add_item($this->create_item('b'));
+
+        $actual = $this->sut->get_item($id)['id'];
+        $expected = '1';
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function キーが0でタイトルがaのアイテムを追加してキーが0のアイテムのタイトルがaであるべき()
+    {
+        $id = 0;
+        $this->sut->add_item($this->create_item('a'));
+        $this->sut->add_item($this->create_item('b'));
+
+        $actual = $this->sut->get_item($id)['title'];
+        $expected = 'a';
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function キーが1でタイトルがbのアイテムを追加してキーが1のアイテムのタイトルがbであるべき()
+    {
+        $id = 1;
+        $this->sut->add_item($this->create_item('a'));
+        $this->sut->add_item($this->create_item('b'));
+
+        $actual = $this->sut->get_item($id)['title'];
+        $expected = 'b';
+
+        $this->assertEquals($expected, $actual);
     }
 
     private function create_todo_list($item_number)
