@@ -8,7 +8,7 @@ class Todo
     function __construct()
     {
         $json = $this->read();
-        $this->todo_list = json_decode($json,true);
+        $this->todo_list = json_decode($json, true);
     }
 
     public function get_todo_list()
