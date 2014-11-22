@@ -36,32 +36,57 @@ class TodoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * test
-     */
-    public function todo_listファイルの0番目の内容が1()
-    {
-        $this->assertEquals('1', $this->sut->get_todo_item(0));
-    }
-
-    /**
      * @test
      */
-    public function 追加したアイテムのaが取得できるか()
+    public function aを渡したらaが取得できるべき()
     {
         $this->sut->add_item('a');
-        $itemList = $this->sut->get_todo_list();
-        $this->assertEquals('a', $itemList[0]);
+        $todo_list = $this->sut->get_todo_list();
+        $this->assertEquals('a', $todo_list[count($todo_list) - 1]);
     }
 
     /**
      * @test
      */
-    public function 追加したアイテムのbが取得できるか()
+    public function bを渡したらbが取得できるべき()
     {
         $this->sut->add_item('b');
-        $itemList = $this->sut->get_todo_list();
-        $this->assertEquals('b', $itemList[0]);
+        $todo_list = $this->sut->get_todo_list();
+        $this->assertEquals('b', $todo_list[count($todo_list) - 1]);
     }
 
+    /**
+     * @test
+     */
+    public function _2つアイテムを追加したらアイテム数が2件であるべき()
+    {
+        $this->createTodoList(2);
+        $this->assertEquals(2, count($this->sut->get_todo_list()));
+    }
+
+    /**
+     * @test
+     */
+    public function _3つアイテムを追加したらアイテム数が3件であるべき()
+    {
+        $this->createTodoList(3);
+        $this->assertEquals(3, count($this->sut->get_todo_list()));
+    }
+
+    public function createTodoList($item_number)
+    {
+        $this->sut = new Todo();
+
+        for ($i = 0; $i < $item_number; $i++) {
+            $this->sut->add_item('');
+        }
+    }
+
+    public function addItem($item_number)
+    {
+        for ($i = 0; $i < $item_number; $i++) {
+            $this->sut->add_item('');
+        }
+    }
 
 }
