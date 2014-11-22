@@ -7,7 +7,8 @@ class Todo
 
     function __construct()
     {
-        $this->todo_list = array();
+        $json = $this->read();
+        $this->todo_list = json_decode($json,true);
     }
 
     public function get_todo_list()
@@ -15,18 +16,23 @@ class Todo
         return $this->todo_list;
     }
 
-    public function add_item()
+    public function add_item($item)
     {
-        $this->todo_list[] = '';
+        $this->todo_list[] = $item;
 
         return $this->todo_list;
     }
 
     public function read()
     {
-        $file = file_get_contents('./todo_list.txt');
+        $file = file_get_contents('./todo_list.json');
 
         return $file;
+    }
+
+    public function get_todo_item($index)
+    {
+        return $this->todo_list[$index];
     }
 
 }
