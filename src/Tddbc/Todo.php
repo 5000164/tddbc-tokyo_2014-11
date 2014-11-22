@@ -30,9 +30,12 @@ class Todo
         $this->id++;
     }
 
-    public function delete_item()
+    public function delete_item($key=null)
     {
-        $index = count($this->todo_list) - 1;
+        $index = $key;
+        if(is_null($key)) {
+            $index = count($this->todo_list) - 1;
+        }
         unset($this->todo_list[$index]);
     }
 

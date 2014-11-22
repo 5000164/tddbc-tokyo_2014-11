@@ -187,6 +187,20 @@ class TodoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
+    /**
+     * @test
+     */
+    public function キーが0のアイテムを追加してキーが0のアイテムが削除できるべき()
+    {
+        $id = 0;
+        $this->sut->add_item($this->create_item(''));
+
+        $this->sut->delete_item($id);
+        $item = $this->sut->get_item($id);
+
+        $this->assertEquals(false, isset($item));
+    }
+
     private function create_todo_list($item_number)
     {
         $this->sut = new Todo();
